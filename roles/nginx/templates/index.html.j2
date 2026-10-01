@@ -1,0 +1,9 @@
+<html>
+<head><title>Ansible Demo</title></head>
+<body style="font-family: Arial; text-align: center; margin-top: 50px;">
+  <h1>Welcome to {{ inventory_hostname }}</h1>
+  <p>Server IP: {{ ansible_host }}</p>
+  <p>OS: {{ ansible_distribution }} {{ ansible_distribution_version }}</p>
+  <p>Configured automatically by Ansible</p>
+</body>
+</html>

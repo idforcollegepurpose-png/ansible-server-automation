@@ -1,0 +1,14 @@
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Start nginx service
+  command: service nginx start
+  args:
+    creates: /run/nginx.pid
+
+- name: Deploy custom website
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html

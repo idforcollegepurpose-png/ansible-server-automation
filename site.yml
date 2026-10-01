@@ -1,49 +1,14 @@
 - name: Configure web servers
   hosts: webservers
   become: yes
-  tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
-
-    - name: Start nginx service
-      command: service nginx start
-      args:
-        creates: /run/nginx.pid
-
-    - name: Deploy custom website
-      template:
-        src: templates/index.html.j2
-        dest: /var/www/html/index.html
-
-    - name: Disable SSH root login
-      lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^#?PermitRootLogin'
-        line: 'PermitRootLogin no'
-
-    - name: Disable SSH password authentication
-      lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^#?PasswordAuthentication'
-        line: 'PasswordAuthentication no'
+  roles:
+    - common
+    - nginx
+    - security
 
 - name: Generate report
   hosts: localhost
   connection: local
   gather_facts: yes
-  tasks:
-    - name: Create reports folder
-      file:
-        path: reports
-        state: directory
-
-    - name: Generate HTML report
-      template:
-        src: templates/report.html.j2
-        dest: reports/server_report.html
+  roles:
+    - report

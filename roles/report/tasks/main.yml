@@ -1,0 +1,9 @@
+- name: Create reports folder
+  file:
+    path: reports
+    state: directory
+
+- name: Generate HTML report
+  template:
+    src: report.html.j2
+    dest: reports/server_report.html

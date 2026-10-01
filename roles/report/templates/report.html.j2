@@ -1,0 +1,22 @@
+<html>
+<head><title>Server Report</title></head>
+<body style="font-family: Arial; margin: 30px;">
+  <h1>Ansible Server Configuration Report</h1>
+  <p>Generated on: {{ ansible_date_time.date }} {{ ansible_date_time.time }}</p>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <tr style="background:#ddd;">
+      <th>Server</th><th>IP</th><th>OS</th><th>RAM (MB)</th><th>CPU Cores</th><th>Nginx</th>
+    </tr>
+{% for host in groups['webservers'] %}
+    <tr>
+      <td>{{ host }}</td>
+      <td>{{ hostvars[host]['ansible_host'] }}</td>
+      <td>{{ hostvars[host]['ansible_distribution'] }} {{ hostvars[host]['ansible_distribution_version'] }}</td>
+      <td>{{ hostvars[host]['ansible_memtotal_mb'] }}</td>
+      <td>{{ hostvars[host]['ansible_processor_vcpus'] }}</td>
+      <td>Installed</td>
+    </tr>
+{% endfor %}
+  </table>
+</body>
+</html>
